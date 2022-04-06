@@ -3,10 +3,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import HttpResponseRedirect
-
+from diagrams.models import Ai_one, Ai_two
 
 def index(request):
-    return render(request, 'test_case/index.html')
+    a = Ai_one.objects.all()
+    # a = (float(i.current) for i in a)
+    data = a
+    return render(request, 'test_case/index.html', {'data': data})
 
 def register(request):
     if request.POST:
@@ -35,3 +38,9 @@ def register(request):
 def Logout(request):
     logout(request)
     return render(request, 'test_case/index.html')
+
+
+def diagrams(request):
+    a = Ai_one.objects.all()
+    data = a
+    return render(request, 'diagrams/diagrams.html', {'data':data})

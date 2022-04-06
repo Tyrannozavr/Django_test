@@ -55,6 +55,7 @@
 			<li> <a href="#team" class="smoothScroll"> Team</a></li>
 			<li> <a href="#portfolio" class="smoothScroll"> Portfolio</a></li>
 			<li> <a href="#blog" class="smoothScroll"> Blog</a></li>
+            <li><a href="{% url 'diagrams' %}">diagrams</a></li>
 			<li> <a href="#contact" class="smoothScroll"> Contact</a></li>
               {% if user.is_authenticated  %}
                   <li><a href="{% url 'logout' %}">logout</a></li>
