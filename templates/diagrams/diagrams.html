@@ -9,81 +9,57 @@
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
 
+
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
 <!-- График --><div id="chart">
 
-
 <script>
- $(function () {
- var householdPrices = [
- {#{x:'2001',y:0.164},#}
- {#{x:'2002',y:0.173},#}
- {#{x:'2003',y:0.184},#}
- {#{x:'2004',y:0.167},#}
- {#{x:'2005',y:0.177},#}
- {#{x:'2006',y:0.189},#}
- {#{x:'2007',y:0.180},#}
- {#{x:'2008',y:0.183},#}
- {#{x:'2009',y:0.188},#}
- {#{x:'2010',y:0.160},#}
- {#{x:'2011',y:0.176},#}
- {#{x:'2012',y:0.178}#}
- ];
- var industryPrices = [
-     {% for i in data %}
-         {x: '{{ i.id }}',y:{{i.current}}},
-     {% endfor %}
-];
+    var var_one = "{{ categories }}"
+ $(document).ready(function () {
  $("#chart").shieldChart({
  theme: "light",
+ primaryHeader: {
+ text: "Обзор бюджета"
+ },
  exportOptions: {
  image: false,
  print: false
  },
- primaryHeader: {
- text: "Температура"
+ axisX: {
+ categoricalValues:
+     var_one
+     {#["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014"]#}
  },
- chartLegend: {
- align: 'right',
- verticalAlign: 'top',
- renderDirection: 'vertical'
- },
- seriesSettings: {
- line: {
- enablePointSelection: true,
- pointMark: {
- activeSettings: {
- pointSelectedState: {
- drawWidth: 4,
- drawRadius: 4
- }
- }
- }
- }
- },
- axisY: {
- title: {
- text: "Какая то температура подшипника"
+ tooltipSettings: {
+ chartBound: true,
+ axisMarkers: {
+ enabled: true,
+ mode: 'xy'
  }
  },
  dataSeries: [{
  seriesType: 'line',
- collectionAlias: ".",
- data: householdPrices
- },
-     {
- seriesType: 'line',
- collectionAlias: "Температура",
- data: industryPrices
- }
- ]
+ collectionAlias: "Бюджет в тысячях",
+ data:
+     {{ values }}
+     {#[100, 320, 453, 234, 553, 665, 345, 123, 432, 545, 654, 345, 332, 456, 234]#}
+ }]
  });
  });
  </script><!-- /.График -->
+
+    {{ categories }} {{ values }}
 
 </div><!-- /.col-md-8 col-md-offset-2 -->
 </div><!-- /.row -->
 </div><!-- /.container -->
 
+</div><!-- /.col-md-8 col-md-offset-2 -->
+</div><!-- /.row -->
+</div><!-- /.container -->
 <table class="table">
   <thead>
     <tr>
@@ -118,3 +94,4 @@
     </table>
     <input type="submit" value="submit" name="create">
 </form>
+</div>

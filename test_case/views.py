@@ -43,7 +43,7 @@ def Logout(request):
 
 def diagrams(request):
     if request.user.username == 'user_one':
-        model = Ai_one
+         model = Ai_one
     elif request.user.username == 'user_two':
         model = Ai_two
     else:
@@ -64,5 +64,9 @@ def diagrams(request):
             obj.delete()
     a = model.objects.all()
     data = a
+    categories = [f"{i.id}" for i in a]
+    values = [float(i.current) for i in a]
     form = Current_value()
-    return render(request, 'diagrams/diagrams.html', {'data':data, 'form': form})
+    # categories = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014"]
+    # values = [100, 320, 453, 234, 553, 111, 345, 123, 432, 545, 654, 345, 332, 456, 234]
+    return render(request, 'diagrams/diagrams.html', {'categories': categories, 'values': values, 'data': data, 'form':form})
