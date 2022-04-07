@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from diagrams.models import Ai_one, Ai_two, Else
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.shortcuts import HttpResponseRedirect
-from diagrams.models import Ai_one, Ai_two, Else
+from django.shortcuts import HttpResponseRedirect, render
+
 from .forms import Current_value
+
 
 def index(request):
     a = Ai_one.objects.all()
