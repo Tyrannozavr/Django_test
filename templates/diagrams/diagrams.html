@@ -40,7 +40,7 @@
  print: false
  },
  primaryHeader: {
- text: "Цены на электроэнергию"
+ text: "Температура"
  },
  chartLegend: {
  align: 'right',
@@ -62,18 +62,20 @@
  },
  axisY: {
  title: {
- text: "Цена (EUR per kWh)"
+ text: "Какая то температура подшипника"
  }
  },
  dataSeries: [{
  seriesType: 'line',
- collectionAlias: "Бытовая",
+ collectionAlias: ".",
  data: householdPrices
- }, {
+ },
+     {
  seriesType: 'line',
- collectionAlias: "Индустрия",
+ collectionAlias: "Температура",
  data: industryPrices
- }]
+ }
+ ]
  });
  });
  </script><!-- /.График -->
@@ -81,3 +83,38 @@
 </div><!-- /.col-md-8 col-md-offset-2 -->
 </div><!-- /.row -->
 </div><!-- /.container -->
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">current</th>
+      <th scope="col">sts</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for i in data %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.current }} </td>
+        <td>{{ i.sts }}</td>
+        <td>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ i.id }}">
+                <input type="submit" name="update" value="Подтвердить">
+                <input type="submit" name="delete" value="delete">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<form method="post">
+    <table>
+        {% csrf_token %}
+        {{ form }}
+    </table>
+    <input type="submit" value="submit" name="create">
+</form>

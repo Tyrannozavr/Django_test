@@ -3,11 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import HttpResponseRedirect
-from diagrams.models import Ai_one, Ai_two
+from diagrams.models import Ai_one, Ai_two, Else
+from .forms import Current_value
 
 def index(request):
     a = Ai_one.objects.all()
-    # a = (float(i.current) for i in a)
     data = a
     return render(request, 'test_case/index.html', {'data': data})
 
@@ -41,6 +41,27 @@ def Logout(request):
 
 
 def diagrams(request):
-    a = Ai_one.objects.all()
+    if request.user.username == 'user_one':
+        model = Ai_one
+    elif request.user.username == 'user_two':
+        model = Ai_two
+    else:
+        return HttpResponseRedirect('/')
+    if request.POST:
+        if request.POST.get('update'):
+            id = int(request.POST.get('id'))
+            obj = model.objects.get(id=id)
+            obj.sts = 2
+            obj.save()
+        elif request.POST.get('create'):
+            current = request.POST.get('current', 0)
+            sts = request.POST.get('sts', 0)
+            model.objects.create(current=current, sts=sts)
+        elif request.POST.get('delete'):
+            id = int(request.POST.get('id'))
+            obj = model.objects.get(id=id)
+            obj.delete()
+    a = model.objects.all()
     data = a
-    return render(request, 'diagrams/diagrams.html', {'data':data})
+    form = Current_value()
+    return render(request, 'diagrams/diagrams.html', {'data':data, 'form': form})
